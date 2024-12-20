@@ -1,4 +1,3 @@
-const { ifError } = require('assert');
 const mysql = require('mysql2')
 
 const connection = mysql.createConnection(

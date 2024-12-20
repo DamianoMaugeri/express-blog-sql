@@ -11,27 +11,39 @@ let lastid = posts.sort((a, b) => a.id - b.id).at(-1).id
 
 const index = (req, res) => {
 
-    let filteredPosts = posts
+    // let filteredPosts = posts
 
-    // filtro i miei post con le informzaioni della query string e accetto un filtro sui tag ed un limite di contenuti da mostrare 
+    // // filtro i miei post con le informzaioni della query string e accetto un filtro sui tag ed un limite di contenuti da mostrare 
 
-    //filter
-    if (req.query.tag) {
-        filteredPosts = posts.filter((post) => post.tags.map((tag) => tag.toLowerCase()).includes(req.query.tag.toLowerCase()));
+    // //filter
+    // if (req.query.tag) {
+    //     filteredPosts = posts.filter((post) => post.tags.map((tag) => tag.toLowerCase()).includes(req.query.tag.toLowerCase()));
 
-    };
+    // };
 
-    //order   ordino il mio array in ordine alfabetico del titolo
-    filteredPosts.sort((a, b) => a.title.localeCompare(b.title));
+    // //order   ordino il mio array in ordine alfabetico del titolo
+    // filteredPosts.sort((a, b) => a.title.localeCompare(b.title));
 
-    //limit
-    const limit = parseInt(req.query.limit)
-    if (limit && !isNaN(limit) && limit >= 0) {
-        filteredPosts = filteredPosts.slice(0, limit)
-    }
+    // //limit
+    // const limit = parseInt(req.query.limit)
+    // if (limit && !isNaN(limit) && limit >= 0) {
+    //     filteredPosts = filteredPosts.slice(0, limit)
+    // }
 
 
-    res.json(filteredPosts);
+    const sql = `SELECT * FROM posts`
+
+
+    connection.query(sql, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'database query failed' })
+        } else {
+            res.json(results)
+        }
+    })
+
+
+    //     res.json(filteredPosts);
 };
 
 
