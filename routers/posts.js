@@ -11,51 +11,52 @@ const postController = require('../controlles/postController.js')
 // gestisco la ricerca con un middleware
 router.param('id', (req, res, next, id) => {
 
-    const post = posts.find((post) => post.id === parseInt(id));
+    // const post = posts.find((post) => post.id === parseInt(id));
 
-    let prevPost = currentPost = nextPost = null;
-    let trovato = false;
-    for (let i = 0; trovato === false && i < posts.length; i++) {
-        // Prev
-        if (i === 0) {
-            prevPost = null;
-        } else {
-            prevPost = posts[i - 1];
-        }
+    // let prevPost = currentPost = nextPost = null;
+    // let trovato = false;
+    // for (let i = 0; trovato === false && i < posts.length; i++) {
+    //     // Prev
+    //     if (i === 0) {
+    //         prevPost = null;
+    //     } else {
+    //         prevPost = posts[i - 1];
+    //     }
 
-        currentPost = posts[i];
+    //     currentPost = posts[i];
 
-        // Next
-        if (i === (posts.length - 1)) {
-            nextPost = null;
-        } else {
-            nextPost = posts[i + 1];
-        }
+    //     // Next
+    //     if (i === (posts.length - 1)) {
+    //         nextPost = null;
+    //     } else {
+    //         nextPost = posts[i + 1];
+    //     }
 
-        console.log(currentPost);
+    //     console.log(currentPost);
 
-        if (currentPost.id === parseInt(id)) {
-            trovato = true;
-        }
-    }
+    //     if (currentPost.id === parseInt(id)) {
+    //         trovato = true;
+    //     }
+    // }
 
-    console.log(post)
+    // console.log(post)
 
-    if (post) {
-        req.post = currentPost;
-        req.next = nextPost;
-        req.prev = prevPost;
-        next();
-    } else {
-        res.status(404)
-        res.json({
-            from: 'middleware param',
-            error: 'Post not found',
-            message: 'Il post non è stato trovato.',
+    // if (post) {
+    //     req.post = currentPost;
+    //     req.next = nextPost;
+    //     req.prev = prevPost;
+    //     next();
+    // } else {
+    //     res.status(404)
+    //     res.json({
+    //         from: 'middleware param',
+    //         error: 'Post not found',
+    //         message: 'Il post non è stato trovato.',
 
-        })
-        // next();
-    }
+    //     })
+    //     // next();
+    // }
+    next()
 });
 
 router.param('slug', (req, res, next, slug) => {

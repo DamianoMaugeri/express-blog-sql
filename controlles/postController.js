@@ -347,22 +347,40 @@ const modifySlug = (req, res) => {
 //================================================================  DESTROY ============================================================
 
 const destroyConId = (req, res) => {
-    const id = parseInt(req.params.id);
+    // const id = parseInt(req.params.id);
 
-    const postIndex = posts.findIndex((post) => post.id === id);
+    // const postIndex = posts.findIndex((post) => post.id === id);
 
-    if (postIndex === -1) {
-        res.status(404);
-        return res.json(
-            {
-                error: 'Post not found',
-                message: `Non è presente nessun elemento che corrisponde a: ${slug}`
-            }
-        )
-    };
+    // if (postIndex === -1) {
+    //     res.status(404);
+    //     return res.json(
+    //         {
+    //             error: 'Post not found',
+    //             message: `Non è presente nessun elemento che corrisponde a: ${slug}`
+    //         }
+    //     )
+    // };
 
-    posts.splice(postIndex, 1);
-    res.sendStatus(204);
+    // posts.splice(postIndex, 1);
+    // res.sendStatus(204);
+    const { id } = req.params
+
+    const sql = `
+    DELETE
+    FROM posts
+    WHERE id = ?
+    `
+    connection.query(sql, [id], (err) => {
+        if (err) {
+            res.status(500).json({ error: 'failed to delete post' })
+        } else {
+            res.sendStatus(204)
+        }
+
+
+    })
+
+
 
 };
 
