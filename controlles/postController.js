@@ -72,7 +72,27 @@ const showConId = (req, res) => {
 
     //     }
     // }
-    res.json({ ...req.post, nextId: req.next ? req.next.id : null, prevId: req.prev ? req.prev.id : null });
+    // res.json({ ...req.post, nextId: req.next ? req.next.id : null, prevId: req.prev ? req.prev.id : null });
+
+    const { id } = req.params
+
+    const sql = `
+   SELECT *
+   FROM posts
+   WHERE id = ?
+   `
+    connection.query(sql, [id], (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'database query failed' })
+        } else if (results.length === 0) {
+            res.status(404).json({ error: 'Post not found' })
+        } else {
+            res.json(results[0])
+        }
+
+
+    })
+
 };
 
 //-----------------------------------------------------------------------
