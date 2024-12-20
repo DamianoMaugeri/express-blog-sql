@@ -1,5 +1,7 @@
 const posts = require('../data/posts.js')
 
+const connection = require('../data/db.js')
+
 // controllo l'ultimo id 
 let lastid = posts.sort((a, b) => a.id - b.id).at(-1).id
 
